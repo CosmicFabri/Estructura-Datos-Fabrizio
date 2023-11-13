@@ -1,6 +1,6 @@
-// Luis Fabrizio Guzmán Liza, 71274
+package Colas;
 
-package paquete;
+// Luis Fabrizio Guzmán Liza, 71274
 
 public class ColaCircular {
     private Nodo frente;

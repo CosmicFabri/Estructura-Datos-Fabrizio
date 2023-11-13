@@ -1,6 +1,6 @@
 // Elaborado por Luis Fabrizio Guzmán Liza, matrícula: 71274
 
-package paquete;
+package Pila;
 
 public class Nodo {
     
