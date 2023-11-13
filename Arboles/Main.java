@@ -3,7 +3,7 @@ package arboles;
 public class Main {
     public static void main(String[] args) {
 
-        // Creando el árbol ordinario desde la raíz
+        // CREANDO EL ÁRBOL GENERAL
         Arbol<Character> arbolPrincipal = new Arbol<Character>('A', false);
         NodoArbol<Character> raiz = arbolPrincipal.obtenerRaiz();
         
@@ -50,9 +50,76 @@ public class Main {
         NodoArbol<Character> nodoQ = new NodoArbol<Character>('Q');
         arbolPrincipal.agregarNodoArbol(nodoM, nodoQ);
 
-        // Imprimiendo el árbol
+        // Imprimiendo el árbol general...
+        System.out.println("=== Arbol general ===");
         arbolPrincipal.imprimirArbol(Recorrido.PREFIJO);
         arbolPrincipal.imprimirArbol(Recorrido.INFIJO);
         arbolPrincipal.imprimirArbol(Recorrido.POSFIJO);
+        System.out.println("");
+        
+        // CREANDO EL ÁRBOL BINARIO
+        Arbol<Character> arbolBinario = new Arbol<Character>('A', true);
+        NodoArbol<Character> raizBin = arbolBinario.obtenerRaiz();
+        
+        // Añadiendo el segundo nivel del árbol
+        NodoArbol<Character> B = new NodoArbol<Character>('B');
+        arbolBinario.agregarNodoArbol(raizBin, B);
+        
+        // Añadiendo el tercer nivel del árbol
+        NodoArbol<Character> E = new NodoArbol<Character>('E');
+        arbolBinario.agregarNodoArbol(B, E);
+        
+        NodoArbol<Character> C = new NodoArbol<Character>('C');
+        arbolBinario.agregarNodoArbol(B, C);
+        
+        // Añadiendo el cuarto nivel del árbol
+        NodoArbol<Character> F = new NodoArbol<Character>('F');
+        arbolBinario.agregarNodoArbol(E, F);
+        
+        NodoArbol<Character> D = new NodoArbol<Character>('D');
+        arbolBinario.agregarNodoArbol(C, D);
+        
+        // Añadiendo el quinto nivel del árbol
+        NodoArbol<Character> J = new NodoArbol<Character>('J');
+        arbolBinario.agregarNodoArbol(F, J);
+        
+        NodoArbol<Character> G = new NodoArbol<Character>('G');
+        arbolBinario.agregarNodoArbol(D, G);
+        
+        // Añadiendo el sexto nivel del árbol
+        NodoArbol<Character> K = new NodoArbol<Character>('K');
+        arbolBinario.agregarNodoArbol(J, K);
+        
+        NodoArbol<Character> M = new NodoArbol<Character>('M');
+        arbolBinario.agregarNodoArbol(G, M);
+        NodoArbol<Character> H = new NodoArbol<Character>('H');
+        arbolBinario.agregarNodoArbol(G, H);
+        
+        // Añadiendo el séptimo nivel del árbol
+        NodoArbol<Character> L = new NodoArbol<Character>('L');
+        arbolBinario.agregarNodoArbol(K, L);
+        
+        NodoArbol<Character> P = new NodoArbol<Character>('P');
+        arbolBinario.agregarNodoArbol(M, P);
+        
+        NodoArbol<Character> I = new NodoArbol<Character>('I');
+        arbolBinario.agregarNodoArbol(H, I);
+        
+        // Añadiendo el octavo nivel del árbol
+        NodoArbol<Character> Q = new NodoArbol<Character>('Q');
+        arbolBinario.agregarNodoArbol(P, Q);
+        
+        NodoArbol<Character> N = new NodoArbol<Character>('N');
+        arbolBinario.agregarNodoArbol(I, N);
+        
+        // Añadiendo el noveno nivel del árbol
+        NodoArbol<Character> O = new NodoArbol<Character>('O');
+        arbolBinario.agregarNodoArbol(N, O);
+        
+        // Imprimiendo el árbol binario...
+        System.out.println("=== Arbol binario ===");
+        arbolBinario.imprimirArbol(Recorrido.PREFIJO);
+        arbolBinario.imprimirArbol(Recorrido.INFIJO);
+        arbolBinario.imprimirArbol(Recorrido.POSFIJO);
     }
 }
