@@ -1,4 +1,4 @@
-package arboles;
+package Arboles;
 
 public class NodoArbol<T> {
     // El nodo es una variable genérica

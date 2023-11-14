@@ -1,4 +1,4 @@
-package arboles;
+package Arboles;
 
 /**
  * Clase Arbol. Este contiene nodos, y se debe determinar si es binario o no.
@@ -14,6 +14,8 @@ public class Arbol<T> {
      */
     private boolean esBinario = false;
 
+    private int altura = 0;
+
     /**
      * Crear nuevo árbol y determinar si es binario o no.
      *
@@ -24,6 +26,7 @@ public class Arbol<T> {
         raiz = new NodoArbol<T>(dato);
         raiz.setEsBinario(esBinario);
         this.esBinario = esBinario;
+        this.altura += 1;
     }
 
     /**
@@ -77,6 +80,54 @@ public class Arbol<T> {
             case 2:
                 System.out.println("\nPosfijo: ");
                 raiz.imprimirEnPosfijo();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Si la raíz del árbol es nula, el método devolverá 'true'
+     * 
+     * @return
+     */
+    public boolean estaVacio() {
+        return this.raiz == null;
+    }
+
+    public int obtenerAltura(NodoArbol<T> nodoRaiz) {
+        if (nodoRaiz == null) {
+            return 0; // Si el nodo es nulo, la altura es 0
+        }
+
+        int alturaMaxima = 0;
+        NodoArbol<T> hijo = nodoRaiz.obtenerPrimerHijo();
+
+        while (hijo != null) {
+            int alturaHijo = obtenerAltura(hijo);
+            alturaMaxima = Math.max(alturaMaxima, alturaHijo);
+            hijo = hijo.obtenerSiguienteHermano();
+        }
+
+        return alturaMaxima + 1; // Agregar 1 para contar la altura del nodo actual
+    }
+
+    public void imprimirSubArbol(NodoArbol<T> nodoRaiz, Recorrido recorrido) {
+        switch (recorrido.ordinal()) {
+            case 0:
+                System.out.println("Prefijo: ");
+                nodoRaiz.imprimirEnPrefijo();
+                break;
+
+            case 1:
+                System.out.println("\nInfijo: ");
+                nodoRaiz.imprimirEnInfijo();
+                break;
+
+            case 2:
+                System.out.println("\nPosfijo: ");
+                nodoRaiz.imprimirEnPosfijo();
                 break;
 
             default:

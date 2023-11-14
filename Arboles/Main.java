@@ -1,4 +1,4 @@
-package arboles;
+package Arboles;
 
 public class Main {
     public static void main(String[] args) {
@@ -121,5 +121,17 @@ public class Main {
         arbolBinario.imprimirArbol(Recorrido.PREFIJO);
         arbolBinario.imprimirArbol(Recorrido.INFIJO);
         arbolBinario.imprimirArbol(Recorrido.POSFIJO);
+
+        // Obteniendo la altura del árbol
+        System.out.println();
+        System.out.println("Altura del árbol binario: ");
+        System.out.println(arbolBinario.obtenerAltura(raizBin));
+
+        // Imprimiendo los subárboles
+        System.out.println();
+        arbolBinario.imprimirSubArbol(nodoB, Recorrido.PREFIJO);
+        arbolBinario.imprimirSubArbol(nodoD, Recorrido.INFIJO);
+        arbolBinario.imprimirSubArbol(nodoG, Recorrido.POSFIJO);
+
     }
 }
