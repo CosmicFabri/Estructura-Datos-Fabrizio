@@ -5,8 +5,8 @@ public class ArbolAVL <T extends Comparable<T>> {
         // Factor de equilibrio.
         int fe;
 
-        // El valor que se encuentra en el nodo.
-        T valor;
+        // El dato que se encuentra en el nodo.
+        T dato;
 
         // La altura de este nodo en el árbol.
         int altura;
@@ -24,6 +24,7 @@ public class ArbolAVL <T extends Comparable<T>> {
     // Constructor vacío.
     public ArbolAVL() {
         this.raiz = null;
+        this.nodos = 0;
     }
 
     // La altura de un árbol es el número de niveles que hay entre
@@ -42,5 +43,29 @@ public class ArbolAVL <T extends Comparable<T>> {
     // Devuelve si el árbol está vacío o no.
     public boolean estaVacio() {
         return tamano() == 0;
+    }
+
+    // Método para buscar un nodo.
+    public boolean contiene(T dato) {
+        return contiene(raiz, dato);
+    }
+
+    // Método auxiliar recursivo de 'contiene'.
+    private boolean contiene(Nodo nodo, T dato) {
+        // Caso base. No encontramos el valor en el árbol.
+        if (nodo == null) return false;
+
+        // Devuelve -1 si el nodo actual es mayor que el dato,
+        // 1 si el nodo actual es menor que el dato y 0 si son iguales.
+        int comp = dato.compareTo(nodo.dato);
+
+        // Avanzar a la izquierda del árbol.
+        if (comp < 0) return contiene(nodo.izquierdo, dato);
+
+        // Avanzar a la derecha del árbol.
+        if (comp > 0) return contiene(nodo.derecho, dato);
+
+        // Hemos encontrado el valor en el árbol.
+        return true;
     }
 }
