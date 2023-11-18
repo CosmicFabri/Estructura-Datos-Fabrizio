@@ -103,10 +103,10 @@ public class ArbolAVL <T extends Comparable<T>> {
             nodo.derecho = insertar(nodo.derecho, dato);
 
         // Actualizar el factor de equilibrio y los valores de la altura.
-        // actualizar(nodo);
+        actualizar(nodo);
 
         // Re balancear el árbol
-        // return balancear(nodo);
+        return balancear(nodo);
     }
 
     // Actualizar la altura de un nodo y el factor de equilibrio.
@@ -119,5 +119,123 @@ public class ArbolAVL <T extends Comparable<T>> {
 
         // Actualizar el factor de equilibrio.
         nodo.fe = alturaNodoDerecho - alturaNodoIzquierdo;
+    }
+
+    // Re balancea el árbol si el factor de equilibrio es +2 o -2
+    private Nodo balancear(Nodo nodo) {
+        // Subárbol izquierdo más grande
+        if (nodo.fe == -2) {
+            if (nodo.izquierdo.fe <= 0) {
+                return leftLeftCase(nodo);
+            } else {
+                return leftRightCase(nodo);
+            }
+
+        // Subarbol derecho más grande
+        } else if (nodo.fe == +2) {
+            if (nodo.derecho.fe >= 0) {
+                return rightRightCase(nodo);
+            } else {
+                return rightLeftCase(nodo);
+            }
+        }
+
+        // El nodo tiene un balance de 0, 1 o -1. No hacemos cambios.
+        return nodo;
+    }
+
+    private Nodo leftLeftCase(Nodo nodo) {
+        return rightRotation(nodo);
+    }
+
+    private Nodo leftRightCase(Nodo nodo) {
+        nodo.izquierdo = leftRotation(nodo.izquierdo);
+        return leftLeftCase(nodo);
+    }
+
+    private Nodo rightRightCase(Nodo nodo) {
+        return leftRotation(nodo);
+    }
+
+    private Nodo rightLeftCase(Nodo nodo) {
+        nodo.derecho = rightRotation(nodo.derecho);
+        return rightRightCase(nodo);
+    }
+
+    private Nodo leftRotation(Nodo nodo) {
+        Nodo nuevoPadre = nodo.derecho;
+        nodo.derecho = nuevoPadre.izquierdo;
+        nuevoPadre.izquierdo = nodo;
+        actualizar(nodo);
+        actualizar(nuevoPadre);
+        return nuevoPadre;
+    }
+
+    private Nodo rightRotation(Nodo nodo) {
+        Nodo nuevoPadre = nodo.izquierdo;
+        nodo.izquierdo = nuevoPadre.derecho;
+        nuevoPadre.derecho = nodo;
+        actualizar(nodo);
+        actualizar(nuevoPadre);
+        return nuevoPadre;
+    }
+
+    // Eliminar un nodo de este árbol, si es que existe.
+    public boolean eliminar(T elemento) {
+        if (elemento == null) return false;
+
+        if (contiene(raiz, elemento)) {
+            raiz = eliminar(raiz, elemento);
+            nodos--;
+            return true;
+        }
+
+        return false;
+    }
+
+    // Remueve un valor de este árbol.
+    private Nodo eliminar(Nodo nodo, T dato) {
+        if (nodo == null) return null;
+
+        int comp = dato.compareTo(nodo.dato);
+
+        if (comp < 0) {
+            nodo.izquierdo = eliminar(nodo.izquierdo, dato);
+        } else if (comp > 0) {
+            nodo.derecho = eliminar(nodo.derecho, dato);
+        } else {
+            if (nodo.izquierdo == null) {
+                return nodo.derecho;
+            } else if (nodo.derecho == null) {
+                return nodo.izquierdo;
+            } else {
+                if (nodo.izquierdo.altura > nodo.derecho.altura) {
+                    T valorSucesor = findMax(nodo.izquierdo);
+                    nodo.dato = valorSucesor;
+
+                    nodo.izquierdo = eliminar(nodo.izquierdo, valorSucesor);
+                } else {
+                    T valorSucesor = findMin(nodo.derecho);
+                    nodo.dato = valorSucesor;
+
+                    nodo.derecho = eliminar(nodo.derecho, valorSucesor);
+                }
+            }
+        }
+
+        actualizar(nodo);
+        return balancear(nodo);
+    }
+
+    private T findMin(Nodo nodo) {
+        while (nodo.izquierdo != null)
+            nodo = nodo.izquierdo;
+        return nodo.dato;
+    }
+
+    private T findMax(Nodo nodo) {
+        while (nodo.derecho != null)
+            nodo = nodo.derecho;
+        return nodo.dato;
     }
 }
