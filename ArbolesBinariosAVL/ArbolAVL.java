@@ -13,6 +13,10 @@ public class ArbolAVL <T extends Comparable<T>> {
 
         // Los hijos izquierdo y derecho de este nodo.
         Nodo izquierdo, derecho;
+
+        public Nodo(T dato) {
+            this.dato = dato;
+        }
     }
 
     // La raíz del árbol AVL.
@@ -55,8 +59,8 @@ public class ArbolAVL <T extends Comparable<T>> {
         // Caso base. No encontramos el valor en el árbol.
         if (nodo == null) return false;
 
-        // Devuelve -1 si el nodo actual es mayor que el dato,
-        // 1 si el nodo actual es menor que el dato y 0 si son iguales.
+        // Devuelve -1 si el dato es menor que el nodo actual,
+        // 1 si el dato es mayor que el nodo, y 0 si son iguales.
         int comp = dato.compareTo(nodo.dato);
 
         // Avanzar a la izquierda del árbol.
@@ -67,5 +71,53 @@ public class ArbolAVL <T extends Comparable<T>> {
 
         // Hemos encontrado el valor en el árbol.
         return true;
+    }
+
+    // Insertar un dato en el árbol AVL. Este dato no puede ser null.
+    public boolean insertar(T dato) {
+        if (dato == null) return false;
+
+        if (!contiene(raiz, dato)){
+            raiz = insertar(raiz, dato);
+            nodos++;
+            return true;
+        }
+
+        return false;
+    }
+
+    // Inserta un valor dentro del árbol AVL.
+    private Nodo insertar(Nodo nodo, T dato) {
+        // Caso base.
+        if (nodo == null) return new Nodo(dato);
+
+        // Comparar el dato con el valor en el nodo.
+        int comp = dato.compareTo(nodo.dato);
+
+        // Insertar el nodo en el subárbol izquierdo.
+        if (comp < 0)
+            nodo.izquierdo = insertar(nodo.izquierdo, dato);
+
+        // Insertar el nodo en el subárbol derecho.
+        else
+            nodo.derecho = insertar(nodo.derecho, dato);
+
+        // Actualizar el factor de equilibrio y los valores de la altura.
+        // actualizar(nodo);
+
+        // Re balancear el árbol
+        // return balancear(nodo);
+    }
+
+    // Actualizar la altura de un nodo y el factor de equilibrio.
+    private void actualizar(Nodo nodo) {
+        int alturaNodoIzquierdo = (nodo.izquierdo == null) ? -1 : nodo.izquierdo.altura;
+        int alturaNodoDerecho = (nodo.derecho == null) ? -1 : nodo.derecho.altura;
+
+        // Actualizar la altura de este nodo.
+        nodo.altura = 1 + Math.max(alturaNodoIzquierdo, alturaNodoDerecho);
+
+        // Actualizar el factor de equilibrio.
+        nodo.fe = alturaNodoDerecho - alturaNodoIzquierdo;
     }
 }
